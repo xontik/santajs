@@ -1,12 +1,41 @@
 <template>
   <div class="home">
     <h1>{{ msg }}</h1>
+    <h1>{{ msg }}</h1>
+    <h1>{{ msg }}</h1>
+    <h1>{{ msg }}</h1>
+    <h1>{{ msg }}</h1>
+    <h1>{{ msg }}</h1>
+    <h1>{{ msg }}</h1>
+    <h1>{{ msg }}</h1>
+    <h1>{{ msg }}</h1>
+    <h1>{{ msg }}</h1>
+    <h1>{{ msg }}</h1>
+    <h1>{{ msg }}</h1>
+    <h1>{{ msg }}</h1>
+    <h1>{{ msg }}</h1>
+    <h1>{{ msg }}</h1>
+    <h1>{{ msg }}</h1>
+    <h1>{{ msg }}</h1>
+    <h1>{{ msg }}</h1>
+    <h1>{{ msg }}</h1>
+    <h1>{{ msg }}</h1>
+    <h1>{{ msg }}</h1>
+    <h1>{{ msg }}</h1>
+    <h1>{{ msg }}</h1>
+    <h1>{{ msg }}</h1>
+    <h1>{{ msg }}</h1>
+    <h1>{{ msg }}</h1>
+    <h1>{{ msg }}</h1>
+    <h1>{{ msg }}</h1>
+    <h1>{{ msg }}</h1>
+    <h1>{{ msg }}</h1>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'Home',
+  name: 'home',
   data () {
     return {
       msg: 'This is the home page'
@@ -17,7 +46,4 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.home {
-  background-color: aliceblue;
-}
 </style>
