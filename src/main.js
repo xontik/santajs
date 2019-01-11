@@ -4,23 +4,17 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import Vuex from 'vuex'
-
-import VueMaterial from 'vue-material'
-import 'vue-material/dist/vue-material.min.css'
-import 'vue-material/dist/theme/default-dark.css' // This line here
+import Vuetify from 'vuetify'
 
 Vue.config.productionTip = false
-Vue.use(VueMaterial)
 Vue.use(Vuex)
+Vue.use(Vuetify)
 
 const store = new Vuex.Store({
   state: {
     iconOnly: false
   },
   mutations: {
-    toggleMenu (state) {
-      state.iconOnly = !state.iconOnly
-    }
   }
 })
 /* eslint-disable no-new */

@@ -1,8 +1,10 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Home from '@/components/Home'
-import HelloWorld from '@/components/HelloWorld'
-import NotFound from '@/components/NotFound'
+import Home from '@/views/Home'
+import NotFound from '@/views/NotFound'
+import Lists from '@/views/Lists'
+import Events from '@/views/Events'
+import Contact from '@/views/Contact'
 
 Vue.use(Router)
 
@@ -14,9 +16,19 @@ export default new Router({
       component: Home
     },
     {
-      path: '/helloworld',
-      name: 'HelloWorld',
-      component: HelloWorld
+      path: '/lists',
+      name: 'Lists',
+      component: Lists
+    },
+    {
+      path: '/events',
+      name: 'Events',
+      component: Events
+    },
+    {
+      path: '/contact',
+      name: 'Contact',
+      component: Contact
     },
     {
       path: '/*',
