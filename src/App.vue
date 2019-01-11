@@ -1,21 +1,23 @@
 <template>
   <v-app>
-    <app-navigation></app-navigation>
+    <app-navigation/>
     <v-content transition="slide-x-transition">
-      <router-view></router-view>
+        <router-view/>
     </v-content>
+    <custom-footer/>
   </v-app>
 </template>
 
 <script>
-  import AppNavigation from '@/components/AppNavigation'
-  import 'vuetify/dist/vuetify.min.css' // Ensure you are using css-loader
+import 'vuetify/dist/vuetify.min.css'
 
-  export default {
+import AppNavigation from '@/components/AppNavigation'
+import CustomFooter from '@/components/CustomFooter' // Ensure you are using css-loader
+
+export default {
   name: 'App',
-  data: () => ({
-  }),
-  components: {AppNavigation}
+  components: {AppNavigation, CustomFooter},
+  data: () => ({})
 }
 </script>
 

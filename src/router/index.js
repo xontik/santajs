@@ -1,10 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Home from '@/views/Home'
-import NotFound from '@/views/NotFound'
-import Lists from '@/views/Lists'
-import Events from '@/views/Events'
-import Contact from '@/views/Contact'
+import Welcome from '@/views/Welcome'
 
 Vue.use(Router)
 
@@ -12,28 +8,48 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'Home',
-      component: Home
+      name: 'Dashboard',
+      component: () => import('@/views/Dashboard.vue')
+    },
+    {
+      path: '/welcome',
+      name: 'Welcome',
+      component: () => import('@/views/Welcome.vue')
     },
     {
       path: '/lists',
       name: 'Lists',
-      component: Lists
+      component: () => import('@/views/Lists.vue')
     },
     {
       path: '/events',
       name: 'Events',
-      component: Events
+      component: () => import('@/views/Events.vue')
+    },
+    {
+      path: '/events/:id',
+      name: 'Event',
+      component: () => import('@/views/Event.vue')
     },
     {
       path: '/contact',
       name: 'Contact',
-      component: Contact
+      component: () => import('@/views/Contact.vue')
+    },
+    {
+      path: '/sign-in',
+      name: 'signin',
+      component: () => import('@/views/Signin.vue')
+    },
+    {
+      path: '/join',
+      name: 'join',
+      component: () => import('@/views/Join.vue')
     },
     {
       path: '/*',
       name: 'NotFound',
-      component: NotFound
+      component: import('@/views/NotFound.vue')
     }
   ]
 })

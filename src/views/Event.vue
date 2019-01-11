@@ -1,8 +1,8 @@
-<template>
-  <v-container
-    fluid
-    grid-list-md
-  >
+  <template>
+    <v-container
+      fluid
+      grid-list-md
+    >
     <v-layout>
       <v-breadcrumbs
         :items="breadcrumbs"
@@ -10,12 +10,16 @@
     </v-layout>
   </v-container>
 </template>
-
 <script>
 export default {
-  name: 'Lists',
+  name: 'Event',
   data () {
     return {
+      event: {
+        id: 1,
+        name: 'Anniversaire Fanny',
+        img: 'http://source.unsplash.com/Xaanw0s0pMk'
+      },
       breadcrumbs: [
         {
           text: 'Dashboard',
@@ -23,7 +27,13 @@ export default {
           to: '/'
         },
         {
-          text: 'Listes',
+          text: 'Events',
+          to: '/events',
+          disabled: false,
+          exact: true
+        },
+        {
+          text: 'Nom event',
           disabled: true
         }
       ]

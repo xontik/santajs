@@ -14,14 +14,13 @@ const store = new Vuex.Store({
   state: {
     iconOnly: false
   },
-  mutations: {
-  }
+  mutations: {}
 })
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
   router,
   store,
-  components: { App },
+  components: {App},
   template: '<App/>'
 })

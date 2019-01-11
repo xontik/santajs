@@ -13,17 +13,17 @@
 
 <script>
 export default {
-  name: 'Lists',
+  name: 'Dashboard',
   data () {
     return {
+      event: {
+        id: 1,
+        name: 'Anniversaire Fanny',
+        img: 'http://source.unsplash.com/Xaanw0s0pMk'
+      },
       breadcrumbs: [
         {
           text: 'Dashboard',
-          disabled: false,
-          to: '/'
-        },
-        {
-          text: 'Listes',
           disabled: true
         }
       ]
