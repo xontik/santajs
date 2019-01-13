@@ -2,7 +2,7 @@
   <v-app>
     <app-navigation/>
     <v-content transition="slide-x-transition">
-        <router-view/>
+      <router-view/>
     </v-content>
     <custom-footer/>
   </v-app>

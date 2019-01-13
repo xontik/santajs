@@ -1,8 +1,8 @@
-  <template>
-    <v-container
-      fluid
-      grid-list-md
-    >
+<template>
+  <v-container
+    fluid
+    grid-list-md
+  >
     <v-layout>
       <v-breadcrumbs
         :items="breadcrumbs"
