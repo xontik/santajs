@@ -22,6 +22,6 @@ $router->get('/', function () use ($router) {
 $router->get('/user/{id}', function ($id) use ($router) {
     return [
         'response' => $id,
-        'user' => \App\User::all()
+        'user' => "Le user 1 du cul"
         ];
 });
