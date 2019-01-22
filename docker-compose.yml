@@ -13,25 +13,13 @@ services:
   nginx-proxy:
     image: "nginx:stable"
     container_name: "nginx-proxy"
-    links:
-      - php-fpm
     volumes:
       - ./nginx/conf.d:/etc/nginx/conf.d
       - ./nginx/vhost.d:/etc/nginx/vhost.d
-      - ./laravel-back:/html
     ports:
       - "80:8000"
       - "8443:443"
     restart: always
-  db:
-    image: mysql
-    ports:
-      - "3308:3306"
-    environment:
-      MYSQL_ROOT_PASSWORD: santajs
-      MYSQL_DATABASE: santajs
-      MYSQL_USER: santajs
-      MYSQL_PASSWORD: santajs
   portainer:
     image: portainer/portainer
     container_name: portainer
@@ -41,18 +29,39 @@ services:
       - "8800:9000"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-  php-fpm:
-    image: cyberduck/php-fpm-laravel:7.2
-    volumes:
-      - ./laravel-back:/html
+  prisma:
+    image: prismagraphql/prisma:1.24
+    restart: always
+    ports:
+      - "4466:4466"
     environment:
-      DB_CONNECTION: mysql
-      DB_HOST: db
-      DB_DATABASE: santajs
-      DB_USERNAME: santajs
-      DB_PASSWORD: santajs
-      CACHE_DRIVER: array
-    links:
-      - db:mysql
+      PRISMA_CONFIG: |
+        port: 4466
+        databases:
+          default:
+            connector: mysql
+            host: mysql
+            port: 3306
+            user: root
+            password: prisma
+            migrations: true
+  yoga:
+    build: prisma/
+    volumes:
+      - "./prisma:/app"
+    restart: always
     depends_on:
-      - db
+      - prisma
+    ports:
+      - 4000
+  mysql:
+    image: mysql:5.7
+    restart: always
+    ports:
+      - 3308:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: prisma
+    volumes:
+      - mysql:/var/lib/mysql
+volumes:
+  mysql:
