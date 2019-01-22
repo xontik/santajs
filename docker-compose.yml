@@ -19,6 +19,9 @@ services:
     ports:
       - "80:8000"
       - "8443:443"
+    depends_on:
+      - vuejs
+      - yoga
     restart: always
   portainer:
     image: portainer/portainer
