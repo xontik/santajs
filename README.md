@@ -13,5 +13,7 @@ If you still here :
 - Add this line in /etc/hosts ``127.0.0.1 api.santajs.test santajs.test``
 - Clone this repo and cd into it then :``docker-compose up -d``
 
+## Enjoy
+Go to [http://santajs.test:88888](http://santajs.test:88888) for the app.
+Go to [http://santajs.test:88888](http://api.santajs.test:88888/playground) for the graphql playground
 
-Go to santajs.test !!

@@ -55,7 +55,6 @@ services:
     volumes:
       - "./prisma:/app"
       - "/app/node_modules/"
-      - "/app/generated/"
     restart: always
     depends_on:
       - prisma
