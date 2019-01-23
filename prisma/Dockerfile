@@ -14,6 +14,6 @@ RUN npm install && npm install -g prisma
 COPY . .
 
 # build app for production with minification
-ENTRYPOINT  npm start
+ENTRYPOINT npm start
 
 EXPOSE 4000
