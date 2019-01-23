@@ -8,13 +8,12 @@ WORKDIR /app
 COPY package*.json ./
 
 # install project dependencies
-RUN npm install
+RUN npm install && npm install -g prisma
 
 # copy project files and folders to the current working directory (i.e. 'app' folder)
 COPY . .
 
-RUN prisma deploy
 # build app for production with minification
-ENTRYPOINT npm start
+ENTRYPOINT  npm start
 
 EXPOSE 4000
