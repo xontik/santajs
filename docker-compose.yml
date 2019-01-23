@@ -17,9 +17,12 @@ services:
       - ./nginx/conf.d:/etc/nginx/conf.d
       - ./nginx/vhost.d:/etc/nginx/vhost.d
     ports:
-      - "80:8000"
+      - "8888:8000"
       - "8443:443"
     restart: always
+    depends_on:
+      - yoga
+      - vuejs
   portainer:
     image: portainer/portainer
     container_name: portainer
@@ -32,6 +35,8 @@ services:
   prisma:
     image: prismagraphql/prisma:1.24
     restart: always
+    depends_on:
+      - mysql
     ports:
       - "4466:4466"
     environment:
@@ -49,6 +54,8 @@ services:
     build: prisma/
     volumes:
       - "./prisma:/app"
+      - "/app/node_modules/"
+      - "/app/generated/"
     restart: always
     depends_on:
       - prisma
