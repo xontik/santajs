@@ -1,13 +1,60 @@
 type User {
-  id: ID! @unique
-  email: String @unique
-  name: String
-  posts: [Post!]!
+    id: ID! @unique
+    email: String! @unique
+    firstname: String
+    lastname: String
+    pseudo: String @unique
+    dob: DateTime
+    password: String!
 }
 
-type Post {
-  id: ID! @unique
-  title: String!
-  published: Boolean! @default(value: "false")
-  author: User
+type List {
+    id: ID! @unique
+    name: String!
+    owner: User!
+    image: String
+    gifts: [Gift!]
+    events: [Event!]
+}
+
+type Gift {
+    id: ID! @unique
+    name: String!
+    image: String
+    link: String
+    lists: [List!]!
+    gifters: [Gifter!]
+}
+
+type Gifter {
+    id: ID! @unique
+    user: User!
+    list: List!
+    gift: Gift!
+    type: GiftParticipation!
+    comment: String
+}
+
+
+type Event {
+    id: ID! @unique
+    title: String!
+    date: DateTime
+    place: String
+    creator: User!
+    image: String
+    eventList: [EventList!]
+}
+
+type EventList {
+    id: ID! @unique
+    event: Event!
+    user: User!
+    list: List!
+    comment: String
+}
+
+enum GiftParticipation {
+    TOTAL
+    PARTIAL
 }
