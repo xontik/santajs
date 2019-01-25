@@ -1,25 +1,24 @@
+scalar DateTime
+
+type AuthPayload {
+    token: String
+    user: User
+}
+
 type Query {
-    publishedPosts: [Post!]!
-    post(postId: ID!): Post
-    postsByUser(userId: ID!): [Post!]!
+    users: [User]
+    checkLogin: String
 }
 
 type Mutation {
-    createUser(name: String!): User
-    createDraft(title: String!, userId: ID!): Post
-    publish(postId: ID!): Post
+    signup(email: String!, password: String!, firstname: String!): AuthPayload
+    login(email: String!, password: String!): AuthPayload
 }
 
 type User {
     id: ID!
-    email: String
-    name: String!
-    posts: [Post!]!
-}
-
-type Post {
-    id: ID!
-    title: String!
-    published: Boolean!
-    author: User
+    email: String!
+    firstname: String
+    lastname: String
+    pseudo: String
 }

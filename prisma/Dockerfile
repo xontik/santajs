@@ -8,7 +8,7 @@ WORKDIR /app
 COPY package*.json ./
 
 # install project dependencies
-RUN npm install && npm install -g prisma@beta
+RUN npm install && npm install -g prisma@latest
 
 # copy project files and folders to the current working directory (i.e. 'app' folder)
 COPY . .
