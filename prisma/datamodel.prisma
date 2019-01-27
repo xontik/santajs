@@ -4,6 +4,9 @@ type User {
     firstname: String
     lastname: String
     pseudo: String @unique
+    lists: [List!]
+    events:[Event!]
+    gifteds: [Gifter!]
     dob: DateTime
     password: String!
 }
@@ -43,7 +46,7 @@ type Event {
     place: String
     creator: User!
     image: String
-    eventList: [EventList!]
+    eventLists: [EventList!]
 }
 
 type EventList {

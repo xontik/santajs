@@ -5,15 +5,6 @@ type AuthPayload {
     user: User
 }
 
-type Query {
-    users: [User]
-    checkLogin: String
-}
-
-type Mutation {
-    signup(email: String!, password: String!, firstname: String!): AuthPayload
-    login(email: String!, password: String!): AuthPayload
-}
 
 type User {
     id: ID!
@@ -21,4 +12,69 @@ type User {
     firstname: String
     lastname: String
     pseudo: String
+    lists: [List!]
+    gifteds: [Gifter!]
+    events: [Event!]
 }
+
+type Event {
+    id: ID!
+    title: String!
+    date: DateTime
+    place: String
+    creator: User!
+    image: String
+    eventLists: [EventList!]
+}
+
+type EventList {
+    id: ID!
+    event: Event!
+    user: User!
+    list: List!
+    comment: String
+}
+
+type Gift {
+    id: ID!
+    name: String!
+    image: String
+    link: String
+    lists: [List!]!
+    gifters: [Gifter!]
+}
+
+type Gifter {
+    id: ID!
+    user: User!
+    list: List!
+    gift: Gift!
+#    type: GiftParticipation!
+    comment: String
+}
+type List {
+    id: ID!
+    name: String!
+    owner: User!
+    image: String
+    gifts: [Gift!]
+    events: [Event!]
+}
+
+
+type Mutation {
+    signup(email: String!, password: String!, firstname: String!): AuthPayload
+    login(email: String!, password: String!): AuthPayload
+}
+
+
+type Query {
+    users: [User]
+    checkLogin: String
+}
+
+enum GiftParticipation {
+    TOTAL
+    PARTIAL
+}
+
