@@ -1,6 +1,7 @@
 <template>
   <span>
     <v-navigation-drawer
+      v-if="shouldShowMenu"
       v-model="drawer"
       app
       class="grey lighten-4"
@@ -71,7 +72,9 @@
       clipped-left
       color="blue darken-4"
       dark>
-      <v-toolbar-side-icon @click="drawer = !drawer"/>
+      <v-toolbar-side-icon
+        v-if="shouldShowMenu"
+        @click="drawer = !drawer"/>
       <router-link to="/">
         <v-toolbar-title to="/">{{ appTitle }}</v-toolbar-title>
       </router-link>
@@ -110,6 +113,11 @@ export default {
         {divider: true},
         {icon: 'contact_support', text: 'Contact', link: '/contact'}
       ]
+    }
+  },
+  computed: {
+    shouldShowMenu () {
+      return this.$store.state.loggedIn
     }
   }
 }
