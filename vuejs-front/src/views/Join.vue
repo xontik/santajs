@@ -96,6 +96,7 @@
 </template>
 <script>
 import { required, alpha, email, minLength, sameAs } from 'vuelidate/lib/validators'
+import gql from 'graphql-tag'
 
 export default {
   name: 'Join',
@@ -177,6 +178,12 @@ export default {
         // call api
       }
     }
+  },
+  apollo: {
+    // Simple query that will update the 'hello' vue property
+    hello: gql`query {
+      hello(name:"ben")
+    }`
   }
 }
 </script>

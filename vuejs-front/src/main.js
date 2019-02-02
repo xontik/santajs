@@ -5,17 +5,30 @@ import App from './App'
 import router from './router'
 import Vuetify from 'vuetify'
 import Vuelidate from 'vuelidate'
+import VueApollo from 'vue-apollo'
 import store from './store/store'
+import ApolloClient from 'apollo-boost'
 
 Vue.config.productionTip = false
 Vue.use(Vuetify)
+Vue.use(VueApollo)
 Vue.use(Vuelidate)
+
+const apolloClient = new ApolloClient({
+  // You should use an absolute URL here
+  uri: 'http://api.santajs.test:8888/'
+})
+
+const apolloProvider = new VueApollo({
+  defaultClient: apolloClient
+})
 
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
   router,
   store,
+  apolloProvider,
   components: {App},
   template: '<App/>'
 })

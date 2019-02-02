@@ -2,6 +2,9 @@
 
 module.exports = {
   root: true,
+  globals: {
+    gql:true
+  },
   parserOptions: {
     parser: 'babel-eslint'
   },
@@ -17,13 +20,32 @@ module.exports = {
   ],
   // required to lint *.vue files
   plugins: [
-    'vue'
+    'vue',
+    'graphql'
   ],
   // add your custom rules here
   rules: {
     // allow async-await
     'generator-star-spacing': 'off',
     // allow debugger during development
-    'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off'
+    'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
+
+    "graphql/template-strings": ['error', {
+      // Import default settings for your GraphQL client. Supported values:
+      // 'apollo', 'relay', 'lokka', 'fraql', 'literal'
+      env: 'apollo',
+
+      // Import your schema JSON here
+      // schemaJson: require('./schema.json'),
+
+      // OR provide absolute path to your schema JSON (but not if using `eslint --cache`!)
+      // schemaJsonFilepath: path.resolve(__dirname, './schema.json'),
+
+      // OR provide the schema in the Schema Language format
+      // schemaString: printSchema(schema),
+
+      tagName: 'gql',
+    }]
+
   }
 }

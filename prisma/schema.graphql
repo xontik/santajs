@@ -71,6 +71,7 @@ type Mutation {
 type Query {
     users: [User]
     checkLogin: String
+    hello(name: String!): String
 }
 
 enum GiftParticipation {
