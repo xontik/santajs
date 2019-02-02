@@ -63,7 +63,7 @@ type List {
 
 
 type Mutation {
-    signup(email: String!, password: String!, firstname: String!): AuthPayload
+    signup(email: String!, password: String!, firstname: String, lastname: String, pseudo: String): AuthPayload
     login(email: String!, password: String!): AuthPayload
 }
 

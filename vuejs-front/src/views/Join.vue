@@ -10,7 +10,9 @@
         offset-sm2
         offset-md3
       >
-        <v-card class="elevation-12">
+        <v-card
+          v-if="!created"
+          class="elevation-12">
           <v-toolbar
             dark
             color="primary">
@@ -122,7 +124,8 @@ export default {
     passwordConfirm: '',
     show: false,
     checkbox: false,
-    submited: false
+    submited: false,
+    created: false
   }),
 
   computed: {
@@ -174,16 +177,43 @@ export default {
       this.$v.$touch()
       if (!this.$v.$invalid) {
         this.submited = true
-        this.$store.commit('testLogin')
-        // call api
+        this.$apollo.mutate({
+          mutation: gql`mutation signup($email: String!, $password: String!, $firstname: String, $lastname: String, $pseudo: String) {
+            signup (email:$email, password:$password, firstname:$firstname, lastname:$lastname, pseudo:$pseudo) {
+              token
+              user {
+                id
+              }
+            }
+          }`,
+          variables: {
+            email: this.email,
+            password: this.password,
+            lastname: this.lastname,
+            firstname: this.firstname,
+            pseudo: this.pseudo
+          },
+          update: (store, {data}) => {
+            console.log(data)
+            let userId = data.signup.user.id
+            let token = data.signup.token
+            this.saveUserData(userId, token)
+            this.$router.push('/')
+          }
+        }).catch(e => {
+          this.submited = false
+          let message = e.graphQLErrors[0].message
+          if (message === 'pseudo') {
+            console.log('pseudo error')
+          }
+        })
       }
+    },
+    saveUserData (userId, token) {
+      let authPayload = {userId, token}
+      localStorage.setItem('AuthPayload', JSON.stringify(authPayload))
+      this.$store.commit('login', authPayload)
     }
-  },
-  apollo: {
-    // Simple query that will update the 'hello' vue property
-    hello: gql`query {
-      hello(name:"ben")
-    }`
   }
 }
 </script>

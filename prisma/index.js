@@ -29,4 +29,4 @@ const server = new GraphQLServer({
         }
     },
 })
-server.start({playground: '/playground'},() => console.log('Server is running on http://api.santajs.test'))
+server.start({playground: '/playground'},() => console.log('Server is running on http://santajs.test:8888/api/'))

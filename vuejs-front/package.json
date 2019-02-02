@@ -9,11 +9,12 @@
     "start": "npm run dev",
     "unit": "jest --config test/unit/jest.conf.js --coverage",
     "test": "npm run unit",
-    "lint": "eslint --ext .js,.vue src test/unit",
+    "lint": "eslint --ext * src test/unit",
     "build": "node build/build.js"
   },
   "dependencies": {
     "apollo-boost": "^0.1.27",
+    "eslint-plugin-graphql": "^3.0.3",
     "graphql": "^14.1.1",
     "graphql-tag": "^2.10.1",
     "vue": "^2.5.2",

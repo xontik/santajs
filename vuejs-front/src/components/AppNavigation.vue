@@ -117,7 +117,7 @@ export default {
   },
   computed: {
     shouldShowMenu () {
-      return this.$store.state.loggedIn
+      return this.$store.state.authPayload.userId
     }
   }
 }

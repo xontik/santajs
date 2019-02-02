@@ -6,6 +6,15 @@ async function signup(parent, args, context, info) {
 
     const password = await bcrypt.hash(args.password, 10)
     /**@TODO check existing email on create  */
+    console.log(args)
+    let existingUser = await context.prisma.user({pseudo: 'xontik'})
+    if (existingUser) {
+        throw Error('pseudo')
+    }
+    existingUser = await context.prisma.user({email: args.email})
+    if (existingUser) {
+        throw Error('mail')
+    }
     const user = await context.prisma.createUser({ ...args, password })
 
     const token = jwt.sign({ userId: user.id }, APP_SECRET)
@@ -15,6 +24,7 @@ async function signup(parent, args, context, info) {
         token,
         user,
     }
+
 }
 
 async function login(parent, args, context, info) {

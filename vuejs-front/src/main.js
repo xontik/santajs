@@ -16,7 +16,7 @@ Vue.use(Vuelidate)
 
 const apolloClient = new ApolloClient({
   // You should use an absolute URL here
-  uri: 'http://api.santajs.test:8888/'
+  uri: 'http://santajs.test:8888/api/'
 })
 
 const apolloProvider = new VueApollo({
