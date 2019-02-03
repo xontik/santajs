@@ -1,19 +1,27 @@
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const { APP_SECRET, getUserId } = require('../utils')
+const { createError } = require('apollo-errors');
+
+const EmailAlreadyExistError = createError("EmailAlreadyExistError", {
+    message: "This email already exist in the database"
+});
+
+const PseudoAlreadyExistError = createError("PseudoAlreadyExistError", {
+    message: "This email already exist in the database"
+});
 
 async function signup(parent, args, context, info) {
 
     const password = await bcrypt.hash(args.password, 10)
-    /**@TODO check existing email on create  */
-    console.log(args)
-    let existingUser = await context.prisma.user({pseudo: 'xontik'})
-    if (existingUser) {
-        throw Error('pseudo')
+
+    let existingUser = await context.prisma.$exists.user({pseudo: args.pseudo})
+    if (existingUser && args.pseudo) {
+        throw new PseudoAlreadyExistError()
     }
-    existingUser = await context.prisma.user({email: args.email})
+    existingUser = await context.prisma.$exists.user({email: args.email})
     if (existingUser) {
-        throw Error('mail')
+        throw new EmailAlreadyExistError()
     }
     const user = await context.prisma.createUser({ ...args, password })
 

@@ -203,6 +203,7 @@ export default {
         }).catch(e => {
           this.submited = false
           let message = e.graphQLErrors[0].message
+          console.log(e.graphQLErrors)
           if (message === 'pseudo') {
             console.log('pseudo error')
           }

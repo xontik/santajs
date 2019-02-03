@@ -8,6 +8,9 @@ const Gifter = require('./resolver/Gifter')
 const List = require('./resolver/List')
 const User = require('./resolver/User')
 const Mutation = require('./resolver/Mutation')
+
+const { formatError } = require('apollo-errors');
+
 const resolvers = {
     Query,
     Event,
@@ -21,6 +24,7 @@ const resolvers = {
 
 const server = new GraphQLServer({
     typeDefs: './schema.graphql',
+    formatError,
     resolvers,
     context: request => {
         return {
@@ -29,4 +33,4 @@ const server = new GraphQLServer({
         }
     },
 })
-server.start({playground: '/playground'},() => console.log('Server is running on http://santajs.test:8888/api/'))
+server.start({playground: '/playground', formatError},() => console.log('Server is running on http://santajs.test:8888/api/'))
