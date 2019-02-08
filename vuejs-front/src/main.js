@@ -13,10 +13,18 @@ Vue.config.productionTip = false
 Vue.use(Vuetify)
 Vue.use(VueApollo)
 Vue.use(Vuelidate)
-
+// @TODO Handle error without writing in console
 const apolloClient = new ApolloClient({
   // You should use an absolute URL here
-  uri: 'http://santajs.test:8888/api/'
+  uri: 'http://santajs.test:8888/api/',
+  defaultOptions: {
+    watchQuery: {
+      fetchPolicy: 'cache-and-network'
+    },
+    query: {
+      fetchPolicy: 'network-only'
+    }
+  }
 })
 
 const apolloProvider = new VueApollo({
@@ -30,5 +38,8 @@ new Vue({
   store,
   apolloProvider,
   components: {App},
+  created () {
+    this.$store.commit('retrieveAuth')
+  },
   template: '<App/>'
 })

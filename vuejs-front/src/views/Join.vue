@@ -11,12 +11,11 @@
         offset-md3
       >
         <v-card
-          v-if="!created"
           class="elevation-12">
           <v-toolbar
             dark
             color="primary">
-            <v-toolbar-title>Login form</v-toolbar-title>
+            <v-toolbar-title>Join form</v-toolbar-title>
             <v-spacer/>
           </v-toolbar>
           <v-card-text>
@@ -47,8 +46,10 @@
               />
               <v-text-field
                 v-model="pseudo"
+                :error-messages="pseudoErrors"
                 label="Pseudo"
-                required
+                @input="$v.pseudo.$touch()"
+                @blur="$v.pseudo.$touch()"
               />
               <v-text-field
                 v-model="password"
@@ -105,7 +106,14 @@ export default {
   validations: {
     firstname: { required, alpha },
     lastname: { required, alpha },
-    email: { required, email },
+    email: { required,
+      email,
+      isUnique () {
+        return !this.emailExist
+      }},
+    pseudo: {isUnique (value) {
+      return value === '' || !this.pseudoExist
+    }},
     password: { required, minlength: minLength(8) },
     passwordConfirm: { required, sameAs: sameAs('password') },
     checkbox: {
@@ -125,7 +133,8 @@ export default {
     show: false,
     checkbox: false,
     submited: false,
-    created: false
+    submissionError: null,
+    submissionErrorNotification: false
   }),
 
   computed: {
@@ -154,6 +163,13 @@ export default {
       if (!this.$v.email.$dirty) return errors
       !this.$v.email.email && errors.push('L\' e-mail doit etre valide')
       !this.$v.email.required && errors.push('Veuillez renseigner un e-mail')
+      !this.$v.email.isUnique && errors.push('Cette e-mail existe déjà')
+      return errors
+    },
+    pseudoErrors () {
+      const errors = []
+      if (!this.$v.pseudo.$dirty) return errors
+      !this.$v.pseudo.isUnique && errors.push('Ce pseudo existe déjà')
       return errors
     },
     passswordErrors () {
@@ -169,9 +185,43 @@ export default {
       !this.$v.passwordConfirm.required && errors.push('Ce champ est requis')
       !this.$v.passwordConfirm.sameAs && errors.push('Les mots de passe ne sont pas identique')
       return errors
+    },
+    getErrorCode () {
+      if (!this.submissionError) {
+        return 'UnkownError'
+      }
+      if (!this.submissionError.name) {
+        return 'ServerError'
+      }
+      return this.submissionError.name
     }
   },
-
+  // Apollo-specific options
+  apollo: {
+    // Query with parameters
+    emailExist: {
+      // gql query
+      query: gql`query emailExist($email: String!) {
+      emailExist(email: $email)
+    }`,
+      // Static parameters
+      variables () {
+        return {email: this.email}
+      },
+      fetchPolicy: 'network-only'
+    },
+    pseudoExist: {
+      // gql query
+      query: gql`query pseudoExist($pseudo: String!) {
+      pseudoExist(pseudo: $pseudo)
+    }`,
+      // Static parameters
+      variables () {
+        return {pseudo: this.pseudo}
+      },
+      fetchPolicy: 'network-only'
+    }
+  },
   methods: {
     submit () {
       this.$v.$touch()
@@ -192,21 +242,27 @@ export default {
             lastname: this.lastname,
             firstname: this.firstname,
             pseudo: this.pseudo
-          },
-          update: (store, {data}) => {
-            console.log(data)
-            let userId = data.signup.user.id
-            let token = data.signup.token
-            this.saveUserData(userId, token)
-            this.$router.push('/')
           }
+        }).then(result => {
+          let data = result.data
+          let userId = data.signup.user.id
+          let token = data.signup.token
+          this.saveUserData(userId, token)
+          this.$store.commit('addNotification',
+            {
+              type: 'success',
+              message: 'Votre compte a été créé avec succès, vous désormais connecté'
+            })
+          this.$router.push('/')
         }).catch(e => {
+          this.submissionError = e.graphQLErrors[0]
+          this.submissionErrorNotification = true
           this.submited = false
-          let message = e.graphQLErrors[0].message
-          console.log(e.graphQLErrors)
-          if (message === 'pseudo') {
-            console.log('pseudo error')
-          }
+          this.$store.commit('addNotification',
+            {
+              type: 'error',
+              message: 'Une erreur est survenue, pour vous faire aider utilisez le code [' + this.getErrorCode + ']'
+            })
         })
       }
     },

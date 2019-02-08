@@ -1,6 +1,13 @@
 const jwt = require('jsonwebtoken')
 const APP_SECRET = 'jaimefannyencoreplus'
 
+const { createError } = require('apollo-errors');
+
+const AuthentificationError = createError("AuthentificationError", {
+    message: "This email already exist in the database"
+});
+
+
 function getUserId(context) {
     const Authorization = context.request.get('Authorization')
     if (Authorization) {

@@ -40,9 +40,6 @@
                 {{ item.heading }}
               </v-subheader>
             </v-flex>
-            <!--<v-flex xs6 class="text-xs-right">-->
-            <!--<v-btn small flat>edit</v-btn>-->
-            <!--</v-flex>-->
           </v-layout>
           <v-divider
             v-else-if="item.divider"
@@ -96,6 +93,21 @@
         to="join"
       >JOIN</v-btn>
     </v-toolbar>
+    <v-snackbar
+      v-model="snackbar.value"
+      :right="true"
+      :color="snackbar.type"
+      :top="true"
+    >
+      {{ snackbar.message }}
+      <v-btn
+        color="primary"
+        flat
+        @click="closeSnackbar"
+      >
+        Close
+      </v-btn>
+    </v-snackbar>
   </span>
 </template>
 
@@ -116,8 +128,16 @@ export default {
     }
   },
   computed: {
+    snackbar () {
+      return this.$store.state.snackbar
+    },
     shouldShowMenu () {
       return this.$store.state.authPayload.userId
+    }
+  },
+  methods: {
+    closeSnackbar () {
+      this.$store.commit('closeNotification')
     }
   }
 }

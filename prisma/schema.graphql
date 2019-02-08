@@ -70,6 +70,8 @@ type Mutation {
 
 type Query {
     users: [User]
+    emailExist(email: String!): Boolean
+    pseudoExist(pseudo: String!): Boolean
     checkLogin: String
     hello(name: String!): String
 }
