@@ -24,6 +24,16 @@ const apolloClient = new ApolloClient({
     query: {
       fetchPolicy: 'network-only'
     }
+  },
+  request: async (operation) => {
+    const token = await store.state.authPayload.token
+    if (token) {
+      operation.setContext({
+        headers: {
+          Authorization: token
+        }
+      })
+    }
   }
 })
 
