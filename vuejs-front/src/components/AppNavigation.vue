@@ -132,6 +132,7 @@ export default {
       return this.$store.state.snackbar
     },
     shouldShowMenu () {
+      console.log('shouldShowMenu')
       return this.$store.state.authPayload.userId
     }
   },

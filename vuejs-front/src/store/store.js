@@ -5,10 +5,7 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    authPayload: {
-      userId: null,
-      token: null
-    },
+    authPayload: {},
     snackbar: {
       type: '',
       message: '',
@@ -18,8 +15,9 @@ export default new Vuex.Store({
   mutations: {
     testLogin (state) { state.loggedIn = true },
     login (state, payload) {
-      state.authPayload.userId = payload.userId
-      state.authPayload.token = payload.token
+      state.authPayload = {
+        ...payload
+      }
     },
     addNotification (state, payload) {
       state.snackbar.value = true
@@ -32,9 +30,11 @@ export default new Vuex.Store({
       state.snackbar.message = ''
     },
     retrieveAuth (state) {
-      let storeageAuth = localStorage.getItem('AuthPayload') ? JSON.parse(localStorage.getItem('AuthPayload')) : {}
-      state.authPayload.userId = storeageAuth.userId
-      state.authPayload.token = storeageAuth.token
+      let storageAuth = localStorage.getItem('AuthPayload') ? JSON.parse(localStorage.getItem('AuthPayload')) : {}
+      state.authPayload = {
+        ...storageAuth
+      }
+      console.log(state.authPayload)
     }
 
   }
