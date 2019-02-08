@@ -19,7 +19,7 @@
             <v-spacer/>
           </v-toolbar>
           <v-card-text>
-            <form>
+            <v-form @keyup.enter="submit">
               <v-text-field
                 v-model="firstname"
                 :error-messages="firstnameErrors"
@@ -72,16 +72,18 @@
                 @click:append="show = !show"
                 @input="$v.passwordConfirm.$touch()"
                 @blur="$v.passwordConfirm.$touch()"
+                @keyup.enter="submit"
               />
               <v-checkbox
                 v-model="checkbox"
                 :error-messages="checkboxErrors"
                 label="Accepter les Conditions d'utilisation ?"
                 required
+                @keyup.enter="submit"
                 @change="$v.checkbox.$touch()"
                 @blur="$v.checkbox.$touch()"
               />
-            </form>
+            </v-form>
           </v-card-text>
           <v-card-actions>
             <v-btn
