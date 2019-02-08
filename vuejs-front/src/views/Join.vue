@@ -247,12 +247,13 @@ export default {
           let data = result.data
           let userId = data.signup.user.id
           let token = data.signup.token
-          this.saveUserData(userId, token)
-          this.$store.commit('addNotification',
-            {
-              type: 'success',
-              message: 'Votre compte a été créé avec succès, vous désormais connecté'
-            })
+          this.$store.dispatch('setAuth', {userId, token}).then(() =>
+            this.$store.commit('addNotification',
+              {
+                type: 'success',
+                message: 'Votre compte a été créé avec succès, vous désormais connecté'
+              })
+          )
           this.$router.push('/')
         }).catch(e => {
           this.submissionError = e.graphQLErrors[0]
@@ -265,11 +266,6 @@ export default {
             })
         })
       }
-    },
-    saveUserData (userId, token) {
-      let authPayload = {userId, token}
-      localStorage.setItem('AuthPayload', JSON.stringify(authPayload))
-      this.$store.commit('login', authPayload)
     }
   }
 }

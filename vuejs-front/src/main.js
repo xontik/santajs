@@ -39,7 +39,7 @@ new Vue({
   apolloProvider,
   components: {App},
   created () {
-    this.$store.commit('retrieveAuth')
+    this.$store.dispatch('retrieveAuth')
   },
   template: '<App/>'
 })

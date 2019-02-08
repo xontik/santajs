@@ -6,11 +6,7 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     authPayload: {},
-    snackbar: {
-      type: '',
-      message: '',
-      value: false
-    }
+    snackbar: {}
   },
   mutations: {
     testLogin (state) { state.loggedIn = true },
@@ -19,22 +15,35 @@ export default new Vuex.Store({
         ...payload
       }
     },
+    logout (state) {
+      state.authPayload = {}
+    },
     addNotification (state, payload) {
-      state.snackbar.value = true
-      state.snackbar.type = payload.type
-      state.snackbar.message = payload.message
+      state.snackbar = {
+        value: true,
+        ...payload
+      }
     },
     closeNotification (state) {
-      state.snackbar.value = false
-      state.snackbar.type = ''
-      state.snackbar.message = ''
-    },
-    retrieveAuth (state) {
-      let storageAuth = localStorage.getItem('AuthPayload') ? JSON.parse(localStorage.getItem('AuthPayload')) : {}
-      state.authPayload = {
-        ...storageAuth
+      state.snackbar = {
+        value: true,
+        type: '',
+        message: ''
       }
-      console.log(state.authPayload)
+    }
+  },
+  actions: {
+    retrieveAuth (context) {
+      let storageAuth = localStorage.getItem('AuthPayload') ? JSON.parse(localStorage.getItem('AuthPayload')) : {}
+      context.commit('login', storageAuth)
+    },
+    setAuth (context, payload) {
+      localStorage.setItem('AuthPayload', JSON.stringify(payload))
+      context.commit('login', payload)
+    },
+    logout (context) {
+      localStorage.removeItem('AuthPayload')
+      context.commit('logout')
     }
 
   }
